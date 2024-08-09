@@ -1,0 +1,31 @@
+.imgBox {
+  height: 152px;
+  overflow: hidden;
+}
+
+.image {
+  background-size: cover;
+  width: 100%;
+}
+
+.infoBox {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 6px;
+}
+
+.infoData {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+
+  font-size: 12px;
+}
+
+.type {
+  font-weight: 600;
+}
+
+.value {
+  font-weight: 400;
+}

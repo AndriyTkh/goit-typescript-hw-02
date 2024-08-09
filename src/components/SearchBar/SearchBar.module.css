@@ -1,0 +1,47 @@
+.headerBox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #3846ad;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+
+  z-index: 10;
+}
+
+.headForm {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+
+  border-radius: 4px;
+  background-color: white;
+
+  width: 320px;
+  overflow: hidden;
+
+  margin: 8px auto;
+  padding-left: 4px;
+}
+
+.submitBtn {
+  border: none;
+  width: 24px;
+  background-color: white;
+
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+.icon {
+  fill: gray;
+}
+
+.input {
+  border: none;
+  width: 100%;
+  height: 24px;
+
+  padding: 4px 0 4px 8px;
+}
