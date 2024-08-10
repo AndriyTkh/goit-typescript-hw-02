@@ -1,18 +1,20 @@
 import ImageCard from "../ImageCard/ImageCard";
 import css from "./ImageGallery.module.css";
+import { IImageData, IModalData } from "../../types";
 
-export default function ImageGallery({ pictures, onImageClick }) {
+type Props = {
+  pictures: IImageData[],
+  onImageClick: (modalData: IModalData) => void,
+}
+
+export default function ImageGallery({pictures, onImageClick}: Props) {
   return (
     <ul className={css.gallery}>
-      {pictures.map((pic) => {
+      {pictures.map((pic: IImageData) => {
         return (
           <li key={pic.id}>
             <ImageCard
-              src={pic.urls.small}
-              regular={pic.urls.regular}
-              alt={pic.alt_description}
-              likes={pic.likes}
-              autor={pic.user.first_name}
+              imageData = {pic}
               onImageClick={onImageClick}
             />
           </li>

@@ -1,11 +1,18 @@
 import Modal from "react-modal";
 import css from "./ImageModal.module.css";
+import { IModalData } from "../../types";
+
+type Props = {
+  modalIsOpen: boolean,
+  onClose: () => void,
+  data: IModalData,
+}
 
 export default function ImageModal({
   modalIsOpen,
   onClose,
-  data: { srcFull, altText },
-}) {
+  data,
+}: Props) {
   return (
     <Modal
       isOpen={modalIsOpen}
@@ -13,7 +20,7 @@ export default function ImageModal({
       className={css.modal}
       overlayClassName={css.overlay}
     >
-      <img className={css.pic} src={srcFull} alt={altText} />
+      <img className={css.pic} src={data.srcFull} alt={data.altText} />
     </Modal>
   );
 }

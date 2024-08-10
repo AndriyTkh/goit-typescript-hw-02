@@ -1,6 +1,10 @@
 import css from "./SearchBar.module.css";
 
-export default function SearchBar({ onSearch }) {
+type Props = {
+  onSearch: (evt: React.FormEvent) => void
+}
+
+export default function SearchBar({ onSearch }: Props) {
   return (
     <header className={css.headerBox}>
       <form className={css.headForm} onSubmit={onSearch}>

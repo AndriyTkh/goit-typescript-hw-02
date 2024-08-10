@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 
 import { Hourglass } from "react-loader-spinner";
 import toast, { Toaster } from "react-hot-toast";
@@ -6,35 +6,37 @@ import SearchBar from "../SearchBar/SearchBar";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 
-import getImgData from "../../unsplash-api";
+import { getImgData, mapToImageData } from "../../unsplash-api";
 import css from "./App.module.css";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import ImageModal from "../ImageModal/ImageModal";
 
+import { IImageData, IModalData } from "../../types";
+
 export default function App() {
-  const [pictures, setPictures] = useState([]);
+  const [pictures, setPictures] = useState<Array<IImageData>>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [moreBtn, setMoreBtn] = useState(false);
   const [page, setPage] = useState(1);
   const [input, setInput] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [currentModal, setCurrentModal] = useState({});
+  const [currentModal, setCurrentModal] = useState<IModalData>({srcFull: "", altText: ""});
 
-  const openModal = (modalData) => {
+  const openModal = (modalData: IModalData): void => {
     setModalIsOpen(true);
     setCurrentModal(modalData);
   };
-  const closeModal = () => {
+  const closeModal = (): void => {
     setModalIsOpen(false);
   };
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     setPictures([]);
     setPage(1);
-    const form = evt.target;
-    const userSearch = form.elements.userSearch.value.trim();
+    const form = evt.target as HTMLFormElement;
+    const userSearch = (form.elements.namedItem("userSearch") as HTMLInputElement).value.trim();
 
     if (userSearch === "") {
       toast.error("Search is empty");
@@ -58,16 +60,15 @@ export default function App() {
 
         const response = await getImgData(input, page);
 
-        console.log(response.data);
-        console.log(response.data.results);
+        const ImageData = mapToImageData(response.data.results);
 
-        setPictures(pictures.concat(response.data.results));
+        setPictures(pictures.concat(ImageData));
         if (response.data.total > page * 15) {
           setMoreBtn(true);
         } else {
           toast.error("No more images available");
         }
-      } catch (error) {
+      } catch (error: any) {
         setError(true);
         toast.error(error.message);
       } finally {
@@ -75,7 +76,7 @@ export default function App() {
       }
     }
 
-    loadPage(input);
+    loadPage();
   }, [page, input]);
 
   return (
